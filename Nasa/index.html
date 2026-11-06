@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Astronaut Health Monitor</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+
+  <body>
+    <!-- Main website layout -->
+    <div class="app-container">
+      <!-- Navigation sidebar -->
+      <aside class="sidebar">
+        <h2 class="logo">NASA Health</h2>
+
+        <nav class="navigation">
+          <button class="nav-button active" data-page="dashboard">
+            Dashboard
+          </button>
+
+          <button class="nav-button" data-page="trends">Health Trends</button>
+
+          <button class="nav-button" data-page="checkin">Daily Check-in</button>
+
+          <button class="nav-button" data-page="alerts">Alerts</button>
+        </nav>
+      </aside>
+
+      <!-- Main content area "Dashboard" -->
+      <main class="main-content">
+        <section id="dashboard" class="page active">
+          <div class="dashboard-header">
+            <div>
+              <h1>Mission Health Dashboard</h1>
+              <p>Monitor astronaut health and mission status.</p>
+            </div>
+            <div class="mission-status">
+              <span class="status-indicator"></span>
+              Mission Active
+            </div>
+          </div>
+
+          <div class="dashboard-overview">
+            <!-- Heart Rate Card -->
+            <div class="health-card">
+              <div class="card-header">
+                <span class="card-title">Heart Rate</span>
+                <span class="card-icon">❤️</span>
+              </div>
+              <div class="card-value">
+                72
+                <span>BPM</span>
+              </div>
+              <p class="card-status" id="heartRateStatus">Normal</p>
+            </div>
+
+            <!-- Oxygen Level Card -->
+            <div class="health-card">
+              <div class="card-header">
+                <span class="card-title">Oxygen Level</span>
+                <span class="card-icon">🫁</span>
+              </div>
+              <div class="card-value">98 <span>%</span></div>
+              <p class="card-status" id="oxygenStatus">Normal</p>
+            </div>
+
+            <!-- Body Temperature Card -->
+            <div class="health-card">
+              <div class="card-header">
+                <span class="card-title">Body Temperature</span>
+                <span class="card-icon">🌡️</span>
+              </div>
+              <div class="card-value">36.8 <span>°C</span></div>
+              <p class="card-status" id="temperatureStatus">Normal</p>
+            </div>
+
+            <!-- Sleep Duration Card -->
+            <div class="health-card">
+              <div class="card-header">
+                <span class="card-title">Sleep Duration</span>
+                <span class="card-icon">🌙</span>
+              </div>
+
+              <div class="card-value">
+                <span id="sleepValue">7.5</span>
+                <span>Hours</span>
+              </div>
+
+              <p class="card-status" id="sleepStatus">Recorded</p>
+            </div>
+          </div>
+
+          <div class="dashboard-content">
+            <div class="health-trends">
+              <div class="section-header">
+                <div>
+                  <h2>Health Trends</h2>
+                  <p>Heart rate over the last 6 days</p>
+                </div>
+              </div>
+
+              <div class="chart-container">
+                <canvas id="heartRateChart"></canvas>
+              </div>
+            </div>
+
+            <div class="health-summary">
+              <div class="section-header">
+                <h2>Health Summary</h2>
+                <p>Current health overview</p>
+              </div>
+
+              <div class="summary-list">
+                <div class="summary-item">
+                  <div class="summary-info">
+                    <span class="summary-dot"></span>
+                    <span>Heart Rate</span>
+                  </div>
+                  <span class="summary-status" id="summaryHeartRate"
+                    >Stable</span
+                  >
+                </div>
+
+                <div class="summary-item">
+                  <div class="summary-info">
+                    <span class="summary-dot"></span>
+                    <span>Oxygen Level</span>
+                  </div>
+                  <span class="summary-status" id="summaryOxygen">Normal</span>
+                </div>
+
+                <div class="summary-item">
+                  <div class="summary-info">
+                    <span class="summary-dot"></span>
+                    <span>Body Temperature</span>
+                  </div>
+                  <span class="summary-status" id="summaryTemperature"
+                    >Normal</span
+                  >
+                </div>
+
+                <div class="summary-item">
+                  <div class="summary-info">
+                    <span class="summary-dot"></span>
+                    <span>Sleep Duration</span>
+                  </div>
+                  <span class="summary-status" id="summarySleep">Recorded</span>
+                </div>
+              </div>
+
+              <div class="summary-footer">
+                All health indicators are currently stable.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="trends" class="page" hidden>
+          <h1>My Health Trends</h1>
+          <p>View your health history and trends.</p>
+
+          <!-- Sleep Duration Chart -->
+          <div class="health-summary">
+            <h2>Sleep Duration Trends</h2>
+            <p>Track your sleep hours across check-ins.</p>
+
+            <div class="chart-container">
+              <canvas id="sleepChart"></canvas>
+            </div>
+          </div>
+          <!-- Stress Level Chart -->
+          <div class="health-summary">
+            <h2>Stress Level Trends</h2>
+            <p>Track your reported stress levels across check-ins.</p>
+            <div class="chart-container">
+              <canvas id="stressChart"></canvas>
+            </div>
+          </div>
+          <!-- Symptoms Frequency Chart -->
+          <div class="health-summary">
+            <h2>Symptoms Frequency</h2>
+            <p>See how often each symptom has been reported.</p>
+
+            <div class="chart-container">
+              <canvas id="symptomsChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Check-in History -->
+          <h2>Check-in History</h2>
+
+          <div id="checkinHistory">
+            <!-- Saved check-ins will appear here -->
+          </div>
+        </section>
+
+        <section id="checkin" class="page" hidden>
+          <h1>Daily Health Check-in</h1>
+          <p>Record your daily health information.</p>
+
+          <form id="healthCheckin">
+            <label for="feeling">How are you feeling today?</label>
+            <select id="feeling" name="feeling" required>
+              <option value="">Choose an option</option>
+              <option value="very-good">Very good</option>
+              <option value="good">Good</option>
+              <option value="okay">Okay</option>
+              <option value="not-good">Not good</option>
+            </select>
+
+            <label for="sleepHours">How many hours did you sleep?</label>
+            <input
+              type="number"
+              id="sleepHours"
+              name="sleepHours"
+              min="0"
+              max="24"
+              step="0.5"
+              required
+            />
+
+            <label>Which symptoms are you experiencing?</label>
+
+            <label>
+              <input type="checkbox" name="symptoms" value="dizziness" />
+              Dizziness
+            </label>
+
+            <label>
+              <input type="checkbox" name="symptoms" value="nausea" />
+              Nausea
+            </label>
+
+            <label>
+              <input type="checkbox" name="symptoms" value="fatigue" />
+              Unusual fatigue
+            </label>
+
+            <label>
+              <input type="checkbox" name="symptoms" value="vision-changes" />
+              Vision changes
+            </label>
+
+            <label for="stress">Stress level</label>
+            <select id="stress" name="stress" required>
+              <option value="">Choose an option</option>
+              <option value="low">Low</option>
+              <option value="moderate">Moderate</option>
+              <option value="high">High</option>
+            </select>
+
+            <label for="notes">Additional notes</label>
+            <textarea id="notes" name="notes"></textarea>
+
+            <button type="submit">Submit Check-in</button>
+          </form>
+
+          <p id="formMessage" aria-live="polite"></p>
+        </section>
+
+        <section id="alerts" class="page" hidden>
+          <h1>Alerts and Recommended Actions</h1>
+          <p>important health notifications.</p>
+        </section>
+      </main>
+    </div>
+
+    <script src="js/nav.js"></script>
+    <script src="js/checkin.js"></script>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Dashboard Chart -->
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

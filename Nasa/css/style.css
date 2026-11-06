@@ -1,0 +1,99 @@
+/* 1. Apply basic settings to the whole website */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2. Style the website background */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0b1120;
+    color: #ffffff;
+}
+
+/* 3. Main website layout */
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 4. Navigation sidebar */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #111c32;
+    padding: 30px 20px;
+    border-right: 1px solid #263650;
+}
+
+/* 5. Website logo */
+
+.logo {
+    font-size: 23px;
+    color: #66c7ff;
+    margin-bottom: 40px;
+}
+
+/* 6. Navigation container */
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 7. Navigation buttons */
+
+.nav-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #cbd5e1;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* 8. Button hover effect */
+
+.nav-button:hover {
+    background-color: #20334f;
+    color: #ffffff;
+}
+
+/* 9. Active navigation button */
+
+.nav-button.active {
+    background-color: #176b9c;
+    color: #ffffff;
+}
+
+/* 10. Main content area */
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* 11. Page headings */
+
+.main-content h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+/* 12. Page descriptions */
+
+.main-content p {
+    color: #aab8cc;
+    line-height: 1.6;
+}

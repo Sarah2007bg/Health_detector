@@ -1,0 +1,120 @@
+/* Check-in form container */
+#healthCheckin {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 600px;
+  margin-top: 25px;
+}
+
+/* Question labels */
+#healthCheckin > label {
+  display: block;
+  font-size: 15px;
+  color: #cbd5e1;
+  margin-top: 8px;
+}
+
+/* Dropdowns and number inputs */
+#healthCheckin select,
+#healthCheckin input[type="number"],
+#healthCheckin textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background-color: #17253a;
+  color: white;
+  font-size: 14px;
+}
+
+/* Checkboxes */
+#healthCheckin input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Notes */
+#healthCheckin textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Submit button */
+#healthCheckin button {
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background-color: #176b9c;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#healthCheckin button:hover {
+  background-color: #2188bd;
+}
+/* ===== Check-in History Cards ===== */
+
+#checkinHistory {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.history-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.history-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #4f46e5;
+  font-size: 16px;
+}
+
+.history-card p {
+  margin: 10px 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.history-card button {
+  margin-top: 12px;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 7px;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+}
+
+.history-card button:hover {
+  background: #dc2626;
+}
+#formMessage {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#formMessage.error-message {
+  color: #dc2626;
+}
+
+#formMessage.success-message {
+  color: #16a34a;
+}
