@@ -1,0 +1,54 @@
+/* Performance Assessment feature styles. All selectors are scoped to avoid host-site conflicts. */
+.performance-assessment{--pa-bg:#09111f;--pa-panel:#111e30;--pa-panel2:#17283d;--pa-text:#eaf1fb;--pa-muted:#9aacc2;--pa-blue:#54b5ff;--pa-green:#39d6a0;--pa-yellow:#ffc857;--pa-red:#ff647c;--pa-border:#293d55;color:var(--pa-text);font-family:Arial,sans-serif;}
+.performance-assessment *{box-sizing:border-box}
+.performance-assessment .pa-content{max-width:1150px;margin:0 auto;padding:25px 1%;}
+.performance-assessment .pa-subnav{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;margin-bottom:16px;border-bottom:1px solid var(--pa-border)}
+.performance-assessment .pa-subnav button{background:var(--pa-panel2);color:var(--pa-text)}
+.performance-assessment .pa-subnav button.active{background:var(--pa-blue);color:#071321}
+.performance-assessment button{border:0;border-radius:8px;padding:12px 16px;cursor:pointer;font-weight:bold;color:#071321;background:var(--pa-blue)}
+.performance-assessment button:disabled{opacity:.4;cursor:not-allowed}
+.performance-assessment .secondary{background:var(--pa-panel2);color:var(--pa-text)}
+.performance-assessment .green{background:var(--pa-green)}
+.performance-assessment .danger{background:var(--pa-red);color:white}
+.performance-assessment .pa-view{display:none}
+.performance-assessment .pa-view.active{display:block}
+.performance-assessment .card{background:var(--pa-panel);border:1px solid var(--pa-border);border-radius:13px;padding:20px;margin-bottom:17px}
+.performance-assessment .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.performance-assessment h2,.performance-assessment h3{margin-top:0}
+.performance-assessment p{line-height:1.6}
+.performance-assessment .muted,.performance-assessment .small{color:var(--pa-muted)}
+.performance-assessment .small{font-size:13px}
+.performance-assessment .big{font-size:30px;font-weight:bold}
+.performance-assessment .progress{height:9px;background:#26384d;border-radius:20px;overflow:hidden;margin:15px 0}
+.performance-assessment .progress div{height:100%;width:0;background:var(--pa-green);transition:width .2s}
+.performance-assessment .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.performance-assessment #pa-testArea{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px}
+.performance-assessment .question{font-size:25px;font-weight:bold}
+.performance-assessment .symbol{font-size:42px}
+.performance-assessment .answer-grid{display:grid;grid-template-columns:repeat(2,minmax(110px,1fr));gap:12px;width:min(100%,460px)}
+.performance-assessment .answer-grid button{min-height:65px;font-size:19px}
+.performance-assessment .stimulus{font-size:65px;font-weight:bold;min-height:90px;display:flex;align-items:center;justify-content:center}
+.performance-assessment .memory-sequence{display:flex;justify-content:center;gap:20px;font-size:48px;min-height:70px}
+.performance-assessment .memory-option{font-size:27px!important}
+.performance-assessment .alert{border:1px solid var(--pa-red);background:#351c2a;border-radius:12px;padding:20px;margin:15px 0}
+.performance-assessment .alert h3{color:var(--pa-red)}
+.performance-assessment .alert.critical{border:2px solid var(--pa-red);background:#421b2a}
+.performance-assessment .alert.critical h3{font-size:20px}
+.performance-assessment .alert ul{padding-left:22px;line-height:1.8}
+.performance-assessment .alert li{margin-bottom:5px}
+.performance-assessment .alert .alert-label{font-size:12px;font-weight:bold;letter-spacing:1px;color:var(--pa-red)}
+.performance-assessment table{width:100%;border-collapse:collapse;margin-top:12px}
+.performance-assessment th,.performance-assessment td{padding:11px;border-bottom:1px solid var(--pa-border);text-align:left;font-size:14px}
+.performance-assessment th{color:var(--pa-blue)}
+.performance-assessment input{accent-color:var(--pa-blue)}
+@media(max-width:600px){.performance-assessment .pa-content{padding:18px 4%}.performance-assessment .card{padding:15px}.performance-assessment th,.performance-assessment td{padding:7px;font-size:12px}}
+
+/* Alerts rendered in the host site's existing Alerts page. */
+#alerts .performance-host-alerts{margin-top:24px}
+#alerts .performance-host-alert{padding:16px;margin:12px 0;border:1px solid #d97706;border-left:5px solid #d97706;border-radius:10px;background:#fff7ed;color:#1f2937}
+#alerts .performance-host-alert.critical{border-color:#dc2626;background:#fef2f2}
+#alerts .performance-host-alert-level{font-size:12px;font-weight:700;letter-spacing:.08em;color:#b45309}
+#alerts .performance-host-alert.critical .performance-host-alert-level{color:#b91c1c}
+#alerts .performance-host-alert h4{margin:6px 0;color:#111827}
+#alerts .performance-host-alert p{line-height:1.5}
+#alerts .performance-host-alert ul{padding-left:22px;line-height:1.6}
