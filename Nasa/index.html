@@ -261,6 +261,139 @@
           </form>
 
           <p id="formMessage" aria-live="polite"></p>
+          <!-- Insert this component inside the existing Daily Check-in page. -->
+<div class="performance-assessment" id="performanceAssessment">
+  <div class="pa-content">
+    <div class="pa-intro">
+      <h2>Performance Assessment</h2>
+      <p class="muted">Cognitive and visual assessment tools for crew performance monitoring.</p>
+    </div>
+<div class="pa-subnav" role="tablist" aria-label="Performance assessment sections">
+  <button type="button" class="pa-tab active" onclick="showAssessmentView('pa-dashboard')">Overview</button>
+  <button type="button" class="pa-tab" onclick="showAssessmentView('pa-library')">Library</button>
+  <button type="button" class="pa-tab" onclick="showAssessmentView('pa-baseline')">Baseline</button>
+  <button type="button" class="pa-tab" onclick="showAssessmentView('pa-history')">History</button>
+</div>
+
+<section id="pa-dashboard" class="pa-view active">
+  <h2>Mission Overview</h2>
+  <div class="grid">
+    <div class="card">
+      <p class="muted">Baseline Cycles</p>
+      <div class="big" id="pa-cycleCount">0 / 3</div>
+      <div class="progress"><div id="pa-cycleProgress"></div></div>
+      <p class="small" id="pa-baselineStatus">Not established</p>
+    </div>
+    <div class="card">
+      <p class="muted">WinSCAT Battery</p>
+      <div class="big" id="pa-winStatus">Not completed</div>
+    </div>
+    <div class="card">
+      <p class="muted">Vision Battery</p>
+      <div class="big" id="pa-visionStatus">Not completed</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Assessment Batteries</h3>
+    <div class="grid">
+      <div class="card">
+        <h3>WinSCAT</h3>
+        <p>Coding Memory — Learning</p>
+        <p>Continuous Performance Test</p>
+        <p>Match to Sample</p>
+        <p>Mathematics</p>
+        <p>Coding Memory — Delayed Recall</p>
+        <button onclick="startBattery('winscat')">Start WinSCAT</button>
+      </div>
+      <div class="card">
+        <h3>Vision</h3>
+        <p>Landolt C</p>
+        <p>Amsler Grid</p>
+        <button onclick="startBattery('vision')">Start Vision</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Latest Alerts</h3>
+    <div id="pa-latestAlerts"><p class="muted">No alerts yet.</p></div>
+  </div>
+</section>
+
+<section id="pa-library" class="pa-view">
+  <h2>Assessment Library</h2>
+  <div class="card">
+    <h3>WinSCAT Battery</h3>
+    <p>Coding Memory — Learning: memorize randomly generated symbol-number associations.</p>
+    <p>CPT: respond to X only when immediately preceded by A.</p>
+    <p>Match to Sample: memorize a sequence of three symbols and identify it later.</p>
+    <p>Mathematics: solve arithmetic questions.</p>
+    <p>Coding Memory — Delayed Recall: recall the learned associations.</p>
+  </div>
+  <div class="card">
+    <h3>Vision Battery</h3>
+    <p>Landolt C: identify the direction of the gap in progressively smaller rings.</p>
+    <p>Amsler Grid: report visible irregularities.</p>
+  </div>
+  <div class="card">
+    <p class="small">Demonstration prototype only. These are not validated clinical or official WinSCAT tests.</p>
+  </div>
+</section>
+
+<section id="pa-baseline" class="pa-view">
+  <h2>Baseline Management</h2>
+  <div class="card">
+    <h3>Baseline Collection</h3>
+    <p>One complete cycle requires both batteries.</p>
+    <div class="big" id="pa-baselineCycles">0 / 3</div>
+    <div class="progress"><div id="pa-baselineBar"></div></div>
+  </div>
+  <div class="card">
+    <h3>Individual Test Baselines</h3>
+    <div id="pa-baselineTable"><p class="muted">Complete three cycles first.</p></div>
+  </div>
+  <div class="card">
+    <button class="danger" onclick="resetData()">Reset All Data</button>
+  </div>
+</section>
+
+<section id="pa-history" class="pa-view">
+  <h2>Session History</h2>
+  <div class="card">
+    <button onclick="exportCSV()">Export CSV</button>
+    <div id="pa-historyTable"></div>
+  </div>
+</section>
+
+<section id="pa-testPage" class="pa-view">
+  <div class="card">
+    <p class="muted" id="pa-batteryLabel"></p>
+    <h2 id="pa-testTitle"></h2>
+    <p class="muted" id="pa-testDescription"></p>
+    <div class="progress"><div id="pa-testProgress"></div></div>
+    <p class="small" id="pa-testCounter"></p>
+    <div id="pa-testArea"></div>
+    <div id="pa-testFeedback"></div>
+  </div>
+  <div class="actions">
+    <button class="secondary" onclick="exitTest()">Exit Battery</button>
+  </div>
+</section>
+
+<section id="pa-completion" class="pa-view">
+  <div class="card">
+    <h2>Battery Completed</h2>
+    <p id="pa-completionMessage"></p>
+    <div id="pa-completionResults"></div>
+    <div id="pa-completionAlerts"></div>
+    <button onclick="showAssessmentView('pa-dashboard')">Return to Dashboard</button>
+  </div>
+</section>
+
+
+  </div>
+</div>
         </section>
 
         <section id="alerts" class="page" hidden>
