@@ -105,23 +105,8 @@ function updateDashboard(){
 
 function renderAlerts(){
   const area=document.getElementById("pa-latestAlerts");
-
-  if(!data.alerts.length){
-    area.innerHTML='<p class="muted">No alerts yet.</p>';
-    return;
-  }
-
-  area.innerHTML=data.alerts.slice(0,5).map(a=>`
-    <div class="alert ${a.level==="CRITICAL"?"critical":""}">
-      <p class="alert-label">${escapeHTML(a.level||"ALERT")}</p>
-      <h3>${escapeHTML(a.title)}</h3>
-      <p>${escapeHTML(a.message)}</p>
-      <h4>RECOMMENDED ACTIONS</h4>
-      <ul>${(a.actions||[]).map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul>
-      <p class="small">${escapeHTML(a.date)}</p>
-      <p class="small">Simulation alert — not a medical diagnosis or an operational command.</p>
-    </div>
-  `).join("");
+  if(!area)return;
+  area.innerHTML='<p class="muted">Performance alerts are shown in the main Alerts tab.</p>';
 }
 
 /* =========================
@@ -707,10 +692,13 @@ function createCombinedAlert(){
 ========================= */
 
 function addAlert(alert){
+  const timestamp=Date.now();
   const saved={
     ...alert,
+    id:alert.id||`assessment-${timestamp}-${Math.random().toString(36).slice(2,8)}`,
+    source:"Performance Assessment",
     date:new Date().toLocaleString(),
-    timestamp:Date.now()
+    timestamp
   };
 
   data.alerts.unshift(saved);
@@ -727,28 +715,10 @@ function addAlert(alert){
 
 function showCompletionAlerts(alerts){
   const area=document.getElementById("pa-completionAlerts");
-
-  if(!alerts.length){
-    area.innerHTML=`
-      <div class="card">
-        <h3>No performance alert generated</h3>
-        <p class="muted">No decline meeting the prototype threshold was detected in this battery.</p>
-      </div>
-    `;
-    return;
-  }
-
-  area.innerHTML=alerts.map(a=>`
-    <div class="alert ${a.level==="CRITICAL"?"critical":""}">
-      <p class="alert-label">${escapeHTML(a.level)}</p>
-      <h3>${escapeHTML(a.title)}</h3>
-      <p>${escapeHTML(a.message)}</p>
-      <h4>RECOMMENDED ACTIONS</h4>
-      <ul>${a.actions.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul>
-      <p class="small">${escapeHTML(a.date)}</p>
-      <p class="small">Simulation alert — not a medical diagnosis or an operational command.</p>
-    </div>
-  `).join("");
+  if(!area)return;
+  area.innerHTML=alerts.length
+    ? '<p class="muted">An alert was sent to the main Alerts tab.</p>'
+    : '<p class="muted">No performance alert was generated for this battery.</p>';
 }
 
 /* Evaluate a battery immediately after its completion.
@@ -1005,55 +975,8 @@ function exportCSV(){
   URL.revokeObjectURL(url);
 }
 
-/* =========================
-   MAIN SITE ALERTS BRIDGE
-========================= */
-function renderHostAssessmentAlert(alert){
-  const hostAlerts=document.getElementById("alerts");
-  if(!hostAlerts)return;
-
-  let list=document.getElementById("performanceAssessmentAlerts");
-  if(!list){
-    list=document.createElement("div");
-    list.id="performanceAssessmentAlerts";
-    list.className="performance-host-alerts";
-    const heading=document.createElement("h3");
-    heading.textContent="Performance Assessment Alerts";
-    list.appendChild(heading);
-    hostAlerts.appendChild(list);
-  }
-
-  const card=document.createElement("article");
-  card.className="performance-host-alert"+(alert.level==="CRITICAL"?" critical":"");
-  const level=document.createElement("p");
-  level.className="performance-host-alert-level";
-  level.textContent=alert.level||"ALERT";
-  const title=document.createElement("h4");
-  title.textContent=alert.title||"Performance alert";
-  const message=document.createElement("p");
-  message.textContent=alert.message||"";
-  const date=document.createElement("small");
-  date.textContent=alert.date||new Date().toLocaleString();
-  card.append(level,title,message);
-  if(Array.isArray(alert.actions)&&alert.actions.length){
-    const actionHeading=document.createElement("strong");
-    actionHeading.textContent="Recommended actions";
-    const actions=document.createElement("ul");
-    alert.actions.forEach(item=>{const li=document.createElement("li");li.textContent=item;actions.appendChild(li);});
-    card.append(actionHeading,actions);
-  }
-  card.appendChild(date);
-  list.prepend(card);
-}
-
-window.addEventListener("performance:alert",event=>renderHostAssessmentAlert(event.detail));
-
-function loadHostAssessmentAlerts(){
-  try{
-    const saved=JSON.parse(localStorage.getItem("performanceAssessmentAlerts")||"[]");
-    saved.slice(0,20).reverse().forEach(renderHostAssessmentAlert);
-  }catch(error){console.warn("Could not load performance assessment alerts",error);}
-}
+/* Main Alerts page rendering is centralized in js/alerts.js.
+   addAlert() above stores assessment alerts and emits performance:alert. */
 
 /* =========================
    RESET AND INITIALIZATION
