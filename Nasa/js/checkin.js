@@ -91,6 +91,40 @@ if (checkinForm) {
     // Save the latest check-in separately
     localStorage.setItem("latestCheckin", JSON.stringify(checkin));
 
+    // Evaluate this Daily Check-in and publish any flag to the main Alerts page.
+    // These prototype thresholds are screening flags, not medical instructions.
+    const checkinFlags = [];
+    if (checkin.feeling === "not-good") checkinFlags.push("Crew member reported feeling not good");
+    if (checkin.sleepHours < 6) checkinFlags.push(`Sleep duration was below 6 hours (${checkin.sleepHours} hours)`);
+    if (checkin.stress === "high") checkinFlags.push("High stress level was reported");
+    if (checkin.symptoms.length > 0) {
+      const symptomLabels = {
+        dizziness: "Dizziness",
+        nausea: "Nausea",
+        fatigue: "Unusual fatigue",
+        "vision-changes": "Vision changes"
+      };
+      checkinFlags.push("Reported symptoms: " + checkin.symptoms.map(item => symptomLabels[item] || item).join(", "));
+    }
+
+    if (checkinFlags.length > 0 && typeof publishMainAlert === "function") {
+      publishMainAlert({
+        id: `checkin-${checkin.date}`,
+        source: "Daily Check-in",
+        level: "WARNING",
+        title: "DAILY CHECK-IN: OFF-NOMINAL INDICATORS REPORTED",
+        message: "The latest Daily Check-in contains one or more indicators that should be reviewed by the crew medical team.",
+        details: checkinFlags,
+        actions: [
+          "Notify the crew medical officer / ground medical team and review the reported indicators.",
+          "Ask the medical team to assess whether activation of the Lower Body Negative Pressure (LBNP) suit is appropriate under the mission medical protocol.",
+          "Do not treat this alert as an automatic suit-activation command or a medical diagnosis."
+        ],
+        date: new Date(checkin.date).toLocaleString(),
+        timestamp: new Date(checkin.date).getTime()
+      });
+    }
+
     // Update Dashboard if its function is available
     if (typeof updateDashboardFromCheckin === "function") {
       updateDashboardFromCheckin(checkin);
